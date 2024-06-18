@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,6 @@
           <h3 class="text-lg font-medium text-warm-gray-900">Liste des commentaires</h3>          
           <!-- COMMENTS  -->
           <div id="comment-list" class="-my-4">
-                        
               <div class="flex space-x-4 text-sm text-gray-500">
                 <div class="flex-1 py-10 ">
                   <h3 class="font-medium text-gray-900">Emily Selman</h3>
@@ -24,7 +23,6 @@
                   </div>
                 </div>
               </div>
-            
               <div class="flex space-x-4 text-sm text-gray-500">
                 <div class="flex-1 py-10 border-t border-gray-200">
                   <h3 class="font-medium text-gray-900">Hector Gibbons</h3>
@@ -33,7 +31,6 @@
                   </div>
                 </div>
               </div>
-            
               <div class="flex space-x-4 text-sm text-gray-500">
                 <div class="flex-1 py-10 border-t border-gray-200">
                   <h3 class="font-medium text-gray-900">Mark Edwards</h3>
@@ -42,7 +39,6 @@
                   </div>
                 </div>
               </div>
-            
           </div>
         </div>
       </div>
@@ -64,7 +60,7 @@
           </div>          
         </div>
         <!-- FORM  -->
-        <form action="#" method="POST" class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+        <form id="newFormComment" action="#" method="POST" class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
           <div>
             <label for="first-name" class="block text-sm font-medium text-warm-gray-900">Prénom</label>
             <div class="mt-1">
@@ -96,5 +92,42 @@
     </div>
   </div>
 </div>
+<script>
+  document.getElementById('newFormComment').addEventListener('submit', function(event) {
+    event.preventDefault();
+  
+      const firstName = document.getElementById('first-name').value.trim();
+      const lastName = document.getElementById('last-name').value.trim();
+      const message = document.getElementById('message').value.trim();
+  
+      const errorMessage = document.getElementById('error-message');
+  
+      // Vérifie que les champs sont tous remplis
+      if (firstName === '' || lastName === '' || message === '') {
+          errorMessage.style.display = 'block';
+      } else {
+          errorMessage.style.display = 'none';
+  
+          // Crée un nouveau commentaire
+          const newComment = document.createElement('div');
+          newComment.classList.add('flex', 'space-x-4', 'text-sm', 'text-gray-500', 'py-10', 'border-t', 'border-gray-200');
+  
+          const commentContent = `
+              <div class="flex-1">
+                  <h3 class="font-medium text-gray-900">${firstName} ${lastName}</h3>
+                  <div class="prose prose-sm mt-4 max-w-none text-gray-500">
+                      <p>${message}</p>
+                  </div>
+              </div>
+          `;
+          newComment.innerHTML = commentContent;
+  
+          document.getElementById('comment-list').appendChild(newComment);
+  
+          // Vide les champs du formulaire
+          document.getElementById('comment-form').reset();
+      }
+  });
+  </script>
 </body>
 </html>
